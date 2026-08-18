@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<title>Luma Eyewear — Shop Frames</title>
+<style>
+:root{
+  --ink:#171717; --muted:#6e6e6e; --line:#e7e5e2; --soft:#f7f6f3;
+  --accent:#203640; --accent2:#294b5a; --success:#246b45;
+  --shadow:0 18px 60px rgba(0,0,0,.15)
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--ink);background:#fff}
+button{font:inherit}
+.topbar{background:var(--accent);color:white;text-align:center;font-size:12px;letter-spacing:.08em;padding:9px 18px}
+.nav{height:74px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 42px;border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:10}
+.nav-left,.nav-right{display:flex;gap:25px;align-items:center;font-size:14px}.nav-right{justify-content:flex-end}
+.logo{font-family:Georgia,serif;font-size:28px;letter-spacing:.16em;font-weight:600}
+.hero{padding:58px 24px 42px;text-align:center;background:linear-gradient(#faf9f7,#fff)}
+.hero .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.hero h1{font-family:Georgia,serif;font-weight:500;font-size:46px;margin:0 0 14px}
+.hero p{max-width:650px;margin:0 auto;color:var(--muted);line-height:1.6;font-size:15px}
+.toolbar{max-width:1240px;margin:28px auto 18px;padding:0 28px;display:flex;justify-content:space-between;align-items:center}
+.toolbar h2{font-size:18px;margin:0}.filter{border:1px solid var(--line);background:#fff;padding:10px 15px;border-radius:999px;font-size:13px}
+.grid{max-width:1240px;margin:0 auto 80px;padding:0 28px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{cursor:pointer;transition:.2s ease}.card:hover{transform:translateY(-2px)}
+.image-wrap{aspect-ratio:1.08/1;background:#f7f7f7;overflow:hidden}
+.image-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease}.card:hover img{transform:scale(1.025)}
+.card-info{padding:15px 2px 0;display:flex;justify-content:space-between;gap:16px}.name{font-size:16px;font-weight:600;margin-bottom:5px}
+.meta{color:var(--muted);font-size:13px}.price{font-size:15px;font-weight:600;white-space:nowrap}.hint{margin-top:10px;color:#7a7a7a;font-size:12px}
+.vto-available{display:none;margin-top:10px;font-size:12px;font-weight:700;color:var(--success);letter-spacing:.02em}
+body.vto-enabled .vto-available{display:block}
+
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.46);z-index:30;overflow:auto;padding:26px}
+.overlay.open{display:block}
+.detail{max-width:1180px;margin:0 auto;background:#fff;min-height:calc(100vh - 52px);position:relative;box-shadow:var(--shadow)}
+.close{position:absolute;right:18px;top:16px;border:0;background:#fff;width:42px;height:42px;border-radius:50%;font-size:27px;cursor:pointer;z-index:2;box-shadow:0 4px 18px rgba(0,0,0,.10)}
+.detail-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(320px,.8fr);min-height:100%}
+.gallery{padding:24px;background:#fafafa;display:grid;grid-template-columns:1fr 1fr;gap:12px;align-content:start}
+.gallery figure{margin:0;background:#f3f3f3;overflow:hidden}.gallery img{display:block;width:100%;aspect-ratio:1.1/1;object-fit:cover}
+.details{padding:78px 42px 42px;border-left:1px solid var(--line)}.details .small{color:var(--muted);text-transform:uppercase;letter-spacing:.13em;font-size:11px;margin-bottom:11px}
+.details h2{font-family:Georgia,serif;font-size:35px;font-weight:500;margin:0 0 12px}.detail-price{font-size:20px;font-weight:600;margin-bottom:23px}
+.detail-copy{font-size:14px;line-height:1.7;color:#4f4f4f;padding-bottom:22px;border-bottom:1px solid var(--line)}
+.feature-row{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);font-size:13px}.feature-row span:last-child{color:var(--muted)}
+.action{width:100%;border:0;padding:15px 18px;cursor:pointer;font-weight:650;letter-spacing:.01em}
+.select-btn{margin-top:25px;background:var(--accent);color:#fff}
+.try-btn{display:none;margin-top:10px;background:#fff;color:var(--accent);border:1.5px solid var(--accent)}
+body.vto-enabled .try-btn{display:block}
+.note{margin-top:12px;font-size:11px;color:#888;line-height:1.5}
+
+.vto-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,25,.72);z-index:60;padding:24px;overflow:auto}
+.vto-overlay.open{display:block}
+.vto-shell{max-width:1080px;margin:0 auto;background:#fff;border-radius:18px;box-shadow:var(--shadow);overflow:hidden;position:relative}
+.vto-header{padding:22px 26px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:20px}
+.vto-header h2{font-family:Georgia,serif;font-weight:500;font-size:28px;margin:0}.vto-header p{margin:5px 0 0;color:var(--muted);font-size:13px}
+.vto-close{border:0;background:#f2f2f2;border-radius:50%;width:42px;height:42px;font-size:25px;cursor:pointer}
+.vto-layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(280px,.65fr);gap:0}
+.viewer{padding:20px;border-right:1px solid var(--line)}
+.stage{position:relative;width:100%;aspect-ratio:4/3;background:#101418;border-radius:14px;overflow:hidden}
+.stage video,.stage canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+.stage canvas{pointer-events:none}
+.placeholder{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:#fff;padding:28px;background:radial-gradient(circle at center,#26333a,#101418)}
+.placeholder strong{font-size:18px}.placeholder p{max-width:480px;color:#cad1d5;font-size:13px;line-height:1.55}
+.viewer-controls{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;flex-wrap:wrap}
+.status{font-size:13px;color:var(--muted)}.status.good{color:var(--success)}
+.camera-btn{border:0;background:var(--accent);color:#fff;padding:12px 16px;border-radius:8px;font-weight:650;cursor:pointer}
+.camera-btn.secondary{background:#fff;color:var(--accent);border:1px solid var(--line)}
+.vto-side{padding:24px}
+.vto-side h3{margin:0 0 6px;font-size:18px}.vto-side>p{margin:0 0 18px;color:var(--muted);font-size:13px;line-height:1.5}
+.frame-choice{width:100%;display:grid;grid-template-columns:80px 1fr auto;gap:12px;align-items:center;border:1px solid var(--line);background:#fff;padding:9px;margin-bottom:10px;cursor:pointer;text-align:left}
+.frame-choice.selected{border:2px solid var(--accent);padding:8px}.frame-choice img{width:80px;height:52px;object-fit:contain}
+.fc-name{font-weight:650;font-size:14px}.fc-meta{font-size:12px;color:var(--muted);margin-top:3px}.fc-price{font-size:13px;font-weight:650}
+.privacy{margin-top:16px;padding:12px;background:#f6f8f8;border-radius:9px;color:#58646a;font-size:11px;line-height:1.5}
+footer{border-top:1px solid var(--line);padding:34px;text-align:center;color:var(--muted);font-size:12px}
+
+@media(max-width:850px){
+  .nav{padding:0 18px;grid-template-columns:1fr auto}.nav-left{display:none}.nav-right{gap:12px}
+  .hero h1{font-size:36px}.grid{grid-template-columns:1fr}.detail-grid{grid-template-columns:1fr}
+  .details{border-left:0;padding:35px 24px}.gallery{padding:12px}
+  .vto-layout{grid-template-columns:1fr}.viewer{border-right:0;border-bottom:1px solid var(--line)}
+}
+</style>
+</head>
+<body>
+<div class="topbar">COMPLIMENTARY STANDARD SHIPPING & RETURNS</div>
+<nav class="nav">
+  <div class="nav-left"><span>Eyeglasses</span><span>New Arrivals</span><span>How It Works</span></div>
+  <div class="logo">LUMA</div>
+  <div class="nav-right"><span>Stores</span><span>Help</span><span>Bag (0)</span></div>
+</nav>
+
+<section class="hero">
+  <div class="eyebrow">Prescription Eyewear</div>
+  <h1>Find your next frame.</h1>
+  <p>Explore three signature styles. Each frame includes premium materials, prescription-ready clear lenses, and a 30-day return window.</p>
+</section>
+
+<div class="toolbar">
+  <h2>All Eyeglasses <span style="color:#9b9b9b;font-weight:400">(3)</span></h2>
+  <button class="filter" type="button">Filter & Sort</button>
+</div>
+
+<main class="grid" id="productGrid"></main>
+
+<!-- Identical product-detail modal in both conditions. -->
+<div class="overlay" id="productOverlay" aria-hidden="true">
+  <section class="detail">
+    <button class="close" id="productClose" aria-label="Close">×</button>
+    <div class="detail-grid">
+      <div class="gallery" id="gallery"></div>
+      <aside class="details">
+        <div class="small">Luma Eyewear</div>
+        <h2 id="detailName"></h2>
+        <div class="detail-price">$149.00</div>
+        <p class="detail-copy" id="detailCopy"></p>
+        <div class="feature-row"><span>Frame material</span><span id="material"></span></div>
+        <div class="feature-row"><span>Lens</span><span>Clear · prescription ready</span></div>
+        <div class="feature-row"><span>Returns</span><span>30 days</span></div>
+        <div class="feature-row"><span>Shipping</span><span>Complimentary</span></div>
+        <button class="action select-btn" type="button">Select this frame — $149.00</button>
+        <button class="action try-btn" id="detailTryBtn" type="button">Virtual Try-On</button>
+        <div class="note">Product photographs are shown on a standard model and are not personalized to the viewer.</div>
+      </aside>
+    </div>
+  </section>
+</div>
+
+<!-- This entire VTO interface exists in the same HTML, but is only reachable when ?vto=1. -->
+<div class="vto-overlay" id="vtoOverlay" aria-hidden="true">
+  <section class="vto-shell">
+    <div class="vto-header">
+      <div>
+        <h2>Virtual Try-On</h2>
+        <p>See how the same Luma frames look on your own face.</p>
+      </div>
+      <button class="vto-close" id="vtoClose" aria-label="Close virtual try-on">×</button>
+    </div>
+    <div class="vto-layout">
+      <div class="viewer">
+        <div class="stage" id="stage">
+          <video id="video" autoplay muted playsinline></video>
+          <canvas id="canvas"></canvas>
+          <div class="placeholder" id="placeholder">
+            <div>
+              <strong>Start your camera to try on frames</strong>
+              <p>Center your face and look toward the screen. Your camera image is processed in your browser and is not saved or uploaded by this page.</p>
+            </div>
+          </div>
+        </div>
+        <div class="viewer-controls">
+          <div class="status" id="cameraStatus">Camera is off.</div>
+          <div>
+            <button class="camera-btn" id="startCamera" type="button">Start camera</button>
+            <button class="camera-btn secondary" id="stopCamera" type="button" disabled>Stop camera</button>
+          </div>
+        </div>
+      </div>
+      <aside class="vto-side">
+        <h3>Select a frame</h3>
+        <p>Please try all three frames before continuing with the study.</p>
+        <div id="frameChoices"></div>
+        <div class="privacy">Camera frames are used only for the live virtual overlay. No photo or video is saved by the webpage.</div>
+      </aside>
+    </div>
+  </section>
+</div>
+
+<footer>© 2026 Luma Eyewear</footer>
+
+<script type="module">
+const params = new URLSearchParams(window.location.search);
+const vtoEnabled = params.get("vto") === "1";
+if (vtoEnabled) document.body.classList.add("vto-enabled");
+
+const products = [
+  {id:"black-round",name:"Black Round",meta:"Black acetate · Round",material:"Acetate",
+   copy:"A polished black acetate frame with a softly rounded silhouette and subtle metal details. Designed as an easy everyday optical frame.",
+   frameMeta:"Black acetate · clear lens",scale:1.70,vertical:0.020},
+  {id:"brown-square",name:"Brown Square",meta:"Tortoiseshell acetate · Square",material:"Acetate",
+   copy:"A structured square frame in warm tortoiseshell acetate. The angular lens shape gives the frame a clean, classic profile.",
+   frameMeta:"Tortoiseshell acetate · clear lens",scale:1.70,vertical:0.025},
+  {id:"silver-aviator",name:"Silver Aviator",meta:"Silver metal · Aviator",material:"Metal",
+   copy:"A lightweight silver metal aviator with clear lenses, a double bridge, and adjustable nose pads for a refined optical look.",
+   frameMeta:"Silver metal · clear lens",scale:1.70,vertical:0.035}
+];
+
+const usage = {
+  vtoEnabled,
+  openedProducts:[],
+  vtoOpened:0,
+  cameraStarted:false,
+  frameSelections:[],
+  framesTried:[]
+};
+window.getExperimentUsage = () => JSON.parse(JSON.stringify(usage));
+
+const grid=document.getElementById("productGrid");
+const productOverlay=document.getElementById("productOverlay");
+const gallery=document.getElementById("gallery");
+let currentProduct=products[0];
+
+products.forEach(p=>{
+  const card=document.createElement("article");
+  card.className="card";
+  card.innerHTML=`
+    <div class="image-wrap"><img src="assets/${p.id}-front.jpg" alt="${p.name} front view"></div>
+    <div class="card-info">
+      <div>
+        <div class="name">${p.name}</div>
+        <div class="meta">${p.meta}</div>
+        <div class="hint">View details + 4 images</div>
+        <div class="vto-available">Virtual Try-On available</div>
+      </div>
+      <div class="price">$149.00</div>
+    </div>`;
+  card.addEventListener("click",()=>openProduct(p));
+  grid.appendChild(card);
+});
+
+function openProduct(p){
+  currentProduct=p;
+  usage.openedProducts.push({id:p.id,t:Date.now()});
+  document.getElementById("detailName").textContent=p.name;
+  document.getElementById("detailCopy").textContent=p.copy;
+  document.getElementById("material").textContent=p.material;
+  gallery.innerHTML=["front","side","angled","model"].map(view=>
+    `<figure><img src="assets/${p.id}-${view}.jpg" alt="${p.name} ${view} view"></figure>`
+  ).join("");
+  productOverlay.classList.add("open");
+  productOverlay.setAttribute("aria-hidden","false");
+  document.body.style.overflow="hidden";
+}
+function closeProduct(){
+  productOverlay.classList.remove("open");
+  productOverlay.setAttribute("aria-hidden","true");
+  if(!document.getElementById("vtoOverlay").classList.contains("open")) document.body.style.overflow="";
+}
+document.getElementById("productClose").addEventListener("click",closeProduct);
+productOverlay.addEventListener("click",e=>{if(e.target===productOverlay)closeProduct();});
+
+const vtoOverlay=document.getElementById("vtoOverlay");
+document.getElementById("detailTryBtn").addEventListener("click",()=>{
+  if(!vtoEnabled) return;
+  usage.vtoOpened++;
+  closeProduct();
+  selectFrame(currentProduct.id);
+  vtoOverlay.classList.add("open");
+  vtoOverlay.setAttribute("aria-hidden","false");
+  document.body.style.overflow="hidden";
+});
+function closeVTO(){
+  stopCameraFn();
+  vtoOverlay.classList.remove("open");
+  vtoOverlay.setAttribute("aria-hidden","true");
+  document.body.style.overflow="";
+}
+document.getElementById("vtoClose").addEventListener("click",closeVTO);
+
+const frameChoices=document.getElementById("frameChoices");
+let selectedFrame=products[0];
+const frameImage=new Image();
+frameImage.src=`frames/${selectedFrame.id}.png`;
+
+products.forEach(p=>{
+  const b=document.createElement("button");
+  b.className="frame-choice";
+  b.dataset.id=p.id;
+  b.type="button";
+  b.innerHTML=`
+    <img src="frames/${p.id}.png" alt="">
+    <div><div class="fc-name">${p.name}</div><div class="fc-meta">${p.frameMeta}</div></div>
+    <div class="fc-price">$149.00</div>`;
+  b.addEventListener("click",()=>selectFrame(p.id));
+  frameChoices.appendChild(b);
+});
+function selectFrame(id){
+  selectedFrame=products.find(p=>p.id===id)||products[0];
+  frameImage.src=`frames/${selectedFrame.id}.png`;
+  document.querySelectorAll(".frame-choice").forEach(el=>el.classList.toggle("selected",el.dataset.id===id));
+  usage.frameSelections.push({id,t:Date.now()});
+  if(!usage.framesTried.includes(id)) usage.framesTried.push(id);
+}
+selectFrame(products[0].id);
+
+// MediaPipe Face Landmarker
+const video=document.getElementById("video");
+const canvas=document.getElementById("canvas");
+const ctx=canvas.getContext("2d");
+const placeholder=document.getElementById("placeholder");
+const cameraStatus=document.getElementById("cameraStatus");
+const startBtn=document.getElementById("startCamera");
+const stopBtn=document.getElementById("stopCamera");
+
+let stream=null, landmarker=null, animationId=null, lastInfer=0, smoothed=null;
+
+async function buildLandmarker(){
+  const vision = await import("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.mjs");
+  const fileset = await vision.FilesetResolver.forVisionTasks(
+    "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/wasm"
+  );
+  try{
+    return await vision.FaceLandmarker.createFromOptions(fileset,{
+      baseOptions:{
+        modelAssetPath:"https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/latest/face_landmarker.task",
+        delegate:"GPU"
+      },
+      runningMode:"VIDEO",numFaces:1,
+      minFaceDetectionConfidence:.5,minFacePresenceConfidence:.5,minTrackingConfidence:.5
+    });
+  }catch(e){
+    return await vision.FaceLandmarker.createFromOptions(fileset,{
+      baseOptions:{
+        modelAssetPath:"https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/latest/face_landmarker.task",
+        delegate:"CPU"
+      },
+      runningMode:"VIDEO",numFaces:1,
+      minFaceDetectionConfidence:.5,minFacePresenceConfidence:.5,minTrackingConfidence:.5
+    });
+  }
+}
+
+startBtn.addEventListener("click",startCameraFn);
+stopBtn.addEventListener("click",stopCameraFn);
+
+async function startCameraFn(){
+  try{
+    cameraStatus.textContent="Requesting camera permission…";
+    if(!navigator.mediaDevices?.getUserMedia) throw new Error("Camera access is unavailable in this browser.");
+    stream=await navigator.mediaDevices.getUserMedia({
+      video:{facingMode:"user",width:{ideal:640},height:{ideal:480}},audio:false
+    });
+    video.srcObject=stream;
+    await video.play();
+    canvas.width=video.videoWidth||640;
+    canvas.height=video.videoHeight||480;
+    placeholder.style.display="none";
+    startBtn.disabled=true; stopBtn.disabled=false;
+    usage.cameraStarted=true;
+    cameraStatus.textContent="Camera active. Loading face tracking…";
+    if(!landmarker) landmarker=await buildLandmarker();
+    cameraStatus.textContent="Camera active.";
+    cameraStatus.classList.add("good");
+    animationId=requestAnimationFrame(loop);
+  }catch(err){
+    console.error(err);
+    cameraStatus.textContent=`Camera error: ${err.message}`;
+    startBtn.disabled=false;
+    stopCameraFn();
+  }
+}
+function stopCameraFn(){
+  if(animationId) cancelAnimationFrame(animationId);
+  animationId=null;
+  if(stream) stream.getTracks().forEach(t=>t.stop());
+  stream=null;
+  video.srcObject=null;
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  placeholder.style.display="";
+  startBtn.disabled=false; stopBtn.disabled=true;
+  cameraStatus.textContent="Camera is off.";
+  cameraStatus.classList.remove("good");
+  smoothed=null;
+}
+function lerp(a,b,t){return a+(b-a)*t}
+function smooth(next){
+  const a=.35;
+  if(!smoothed){smoothed={...next};return smoothed}
+  smoothed.cx=lerp(smoothed.cx,next.cx,a);
+  smoothed.cy=lerp(smoothed.cy,next.cy,a);
+  smoothed.dist=lerp(smoothed.dist,next.dist,a);
+  smoothed.angle=lerp(smoothed.angle,next.angle,a);
+  return smoothed;
+}
+function draw(result){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  if(!result.faceLandmarks?.length){
+    cameraStatus.textContent="Face not detected. Look toward the camera.";
+    cameraStatus.classList.remove("good");
+    return;
+  }
+  cameraStatus.textContent="Face detected.";
+  cameraStatus.classList.add("good");
+  const lm=result.faceLandmarks[0];
+  const a=lm[33], b=lm[263];
+  const x1=a.x*canvas.width, y1=a.y*canvas.height;
+  const x2=b.x*canvas.width, y2=b.y*canvas.height;
+  const pose=smooth({
+    cx:(x1+x2)/2,cy:(y1+y2)/2,
+    dist:Math.hypot(x2-x1,y2-y1),
+    angle:Math.atan2(y2-y1,x2-x1)
+  });
+  const width=pose.dist*selectedFrame.scale;
+  const ar=(frameImage.naturalHeight||1)/(frameImage.naturalWidth||1);
+  const height=width*ar;
+  const cy=pose.cy+width*selectedFrame.vertical;
+  ctx.save();
+  ctx.translate(pose.cx,cy);
+  ctx.rotate(pose.angle);
+  ctx.drawImage(frameImage,-width/2,-height/2,width,height);
+  ctx.restore();
+}
+function loop(ts){
+  if(stream && landmarker && video.readyState>=2 && ts-lastInfer>=66){
+    try{draw(landmarker.detectForVideo(video,ts));}catch(e){console.warn(e)}
+    lastInfer=ts;
+  }
+  animationId=requestAnimationFrame(loop);
+}
+
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){
+    if(vtoOverlay.classList.contains("open")) closeVTO();
+    else if(productOverlay.classList.contains("open")) closeProduct();
+  }
+});
+window.addEventListener("pagehide",stopCameraFn);
+</script>
+</body>
+</html>
