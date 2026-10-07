@@ -26,6 +26,8 @@ button{font:inherit}
 .toolbar{max-width:1240px;margin:28px auto 18px;padding:0 28px;display:flex;justify-content:space-between;align-items:center}
 .toolbar h2{font-size:18px;margin:0}.filter{border:1px solid var(--line);background:#fff;padding:10px 15px;border-radius:999px;font-size:13px}
 .grid{max-width:1240px;margin:0 auto 80px;padding:0 28px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.section-label{grid-column:1 / -1;text-align:center;font-size:24px;font-weight:700;letter-spacing:.04em;margin:8px 0 -2px;font-family:Georgia,serif}
+.section-spacer{grid-column:1 / -1;height:6px}
 .card{cursor:pointer;transition:.2s ease}.card:hover{transform:translateY(-2px)}
 .image-wrap{aspect-ratio:1.08/1;background:#f7f7f7;overflow:hidden}
 .image-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease}.card:hover img{transform:scale(1.025)}
@@ -85,7 +87,7 @@ footer{border-top:1px solid var(--line);padding:34px;text-align:center;color:var
 
 @media(max-width:850px){
   .nav{padding:0 18px;grid-template-columns:1fr auto}.nav-left{display:none}.nav-right{gap:12px}
-  .hero h1{font-size:36px}.grid{grid-template-columns:1fr}.detail-grid{grid-template-columns:1fr}
+  .hero h1{font-size:36px}.grid{grid-template-columns:1fr}.section-label{font-size:21px;margin:0 0 -6px}.detail-grid{grid-template-columns:1fr}
   .details{border-left:0;padding:35px 24px}.gallery{padding:12px}
   .vto-layout{grid-template-columns:1fr}.viewer{border-right:0;border-bottom:1px solid var(--line)}
 }
@@ -225,7 +227,13 @@ const productOverlay=document.getElementById("productOverlay");
 const gallery=document.getElementById("gallery");
 let currentProduct=products[0];
 
-products.forEach(p=>{
+function addSectionLabel(label){
+  const el=document.createElement("div");
+  el.className="section-label";
+  el.textContent=label;
+  grid.appendChild(el);
+}
+function addProductCard(p){
   const card=document.createElement("article");
   card.className="card";
   card.innerHTML=`
@@ -241,7 +249,12 @@ products.forEach(p=>{
     </div>`;
   card.addEventListener("click",()=>openProduct(p));
   grid.appendChild(card);
-});
+}
+
+addSectionLabel("Men's");
+products.slice(0,3).forEach(addProductCard);
+addSectionLabel("Women's");
+products.slice(3).forEach(addProductCard);
 
 function openProduct(p){
   currentProduct=p;
