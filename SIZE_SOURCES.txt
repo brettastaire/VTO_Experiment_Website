@@ -1,0 +1,23 @@
+FRAME-SIZE SOURCE NOTES
+
+The Luma frames are fictional. Dimensions displayed on the website are representative optical-frame specifications derived from comparable official Ray-Ban product listings. They are used to make the experimental storefront realistic; they are not measurements of a manufactured Luma product.
+
+Black Round — 49–20–145 mm
+Comparable sample: Ray-Ban RB7266D / RB7075 (49–20; 145 mm temple).
+
+Brown Square — 52–18–145 mm
+Comparable sample: Ray-Ban New Wayfarer Optics RB5184 (52–18; 145 mm temple).
+
+Silver Aviator — 58–14–140 mm
+Comparable sample: Ray-Ban Aviator Optics RB6489 (58–14; 140 mm temple).
+
+Rose Cat-Eye — 52–17–140 mm
+Comparable sample: Ray-Ban RB5362 butterfly/cat-eye optical frame (52–17; 140 mm temple).
+
+Crystal Oval — 51–19–145 mm
+Comparable sample: Ray-Ban RB5447 oval optical frame (51–19; 145 mm temple).
+
+Champagne Square — 53–18–140 mm
+Comparable sample: Ray-Ban RB6532 square metal optical frame (53–18; 140 mm temple).
+
+Notation: lens width – bridge width – temple length, all in millimeters.

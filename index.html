@@ -30,7 +30,7 @@ button{font:inherit}
 .image-wrap{aspect-ratio:1.08/1;background:#f7f7f7;overflow:hidden}
 .image-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease}.card:hover img{transform:scale(1.025)}
 .card-info{padding:15px 2px 0;display:flex;justify-content:space-between;gap:16px}.name{font-size:16px;font-weight:600;margin-bottom:5px}
-.meta{color:var(--muted);font-size:13px}.price{font-size:15px;font-weight:600;white-space:nowrap}.hint{margin-top:10px;color:#7a7a7a;font-size:12px}
+.meta{color:var(--muted);font-size:13px}.card-size{margin-top:6px;color:#777;font-size:12px}.price{font-size:15px;font-weight:600;white-space:nowrap}.hint{margin-top:10px;color:#7a7a7a;font-size:12px}
 .vto-available{display:none;margin-top:10px;font-size:12px;font-weight:700;color:var(--success);letter-spacing:.02em}
 body.vto-enabled .vto-available{display:block}
 
@@ -42,16 +42,9 @@ body.vto-enabled .vto-available{display:block}
 .gallery{padding:24px;background:#fafafa;display:grid;grid-template-columns:1fr 1fr;gap:12px;align-content:start}
 .gallery figure{margin:0;background:#f3f3f3;overflow:hidden}.gallery img{display:block;width:100%;aspect-ratio:1.1/1;object-fit:cover}
 .details{padding:78px 42px 42px;border-left:1px solid var(--line)}.details .small{color:var(--muted);text-transform:uppercase;letter-spacing:.13em;font-size:11px;margin-bottom:11px}
-.details h2{font-family:Georgia,serif;font-size:35px;font-weight:500;margin:0 0 10px}.detail-price{font-size:20px;font-weight:600;margin-bottom:23px}
+.details h2{font-family:Georgia,serif;font-size:35px;font-weight:500;margin:0 0 12px}.detail-price{font-size:20px;font-weight:600;margin-bottom:10px}.rating-row{display:flex;align-items:center;gap:8px;margin:0 0 22px;font-size:13px}.stars{color:#b27a22;letter-spacing:.08em;font-size:16px}.rating-number{font-weight:750;color:var(--ink)}.rating-label{color:var(--muted)}
 .detail-copy{font-size:14px;line-height:1.7;color:#4f4f4f;padding-bottom:22px;border-bottom:1px solid var(--line)}
-.feature-row{display:flex;justify-content:space-between;gap:18px;padding:14px 0;border-bottom:1px solid var(--line);font-size:13px}.feature-row span:last-child{color:var(--muted);text-align:right}
-.rating-row{display:flex;align-items:center;gap:9px;margin:0 0 14px;font-size:13px}
-.star-meter{position:relative;display:inline-block;line-height:1;letter-spacing:.08em;font-size:17px;color:#d8d1c5}
-.star-meter .fill{position:absolute;inset:0 auto 0 0;width:98%;overflow:hidden;white-space:nowrap;color:#b37b1d}
-.rating-value{font-weight:750;color:var(--ink)}
-.review-count{color:var(--muted)}
-.size-key{margin-top:7px;color:#929292;font-size:10.5px;line-height:1.45}
-#frameChoices{max-height:520px;overflow:auto;padding-right:4px}
+.feature-row{display:flex;justify-content:space-between;gap:18px;padding:14px 0;border-bottom:1px solid var(--line);font-size:13px}.feature-row span:last-child{color:var(--muted);text-align:right}.feature-label{display:flex;flex-direction:column;gap:3px}.feature-label small{font-size:10px;color:#999;font-weight:400}
 .action{width:100%;border:0;padding:15px 18px;cursor:pointer;font-weight:650;letter-spacing:.01em}
 .select-btn{margin-top:25px;background:var(--accent);color:#fff}
 .try-btn{display:none;margin-top:10px;background:#fff;color:var(--accent);border:1.5px solid var(--accent)}
@@ -75,7 +68,7 @@ body.vto-enabled .try-btn{display:block}
 .status{font-size:13px;color:var(--muted)}.status.good{color:var(--success)}
 .camera-btn{border:0;background:var(--accent);color:#fff;padding:12px 16px;border-radius:8px;font-weight:650;cursor:pointer}
 .camera-btn.secondary{background:#fff;color:var(--accent);border:1px solid var(--line)}
-.vto-side{padding:24px}
+.vto-side{padding:24px;max-height:76vh;overflow-y:auto}
 .vto-side h3{margin:0 0 6px;font-size:18px}.vto-side>p{margin:0 0 18px;color:var(--muted);font-size:13px;line-height:1.5}
 .frame-choice{width:100%;display:grid;grid-template-columns:80px 1fr auto;gap:12px;align-items:center;border:1px solid var(--line);background:#fff;padding:9px;margin-bottom:10px;cursor:pointer;text-align:left}
 .frame-choice.selected{border:2px solid var(--accent);padding:8px}.frame-choice img{width:80px;height:52px;object-fit:contain}
@@ -121,16 +114,11 @@ footer{border-top:1px solid var(--line);padding:34px;text-align:center;color:var
       <aside class="details">
         <div class="small">Luma Eyewear</div>
         <h2 id="detailName"></h2>
-        <div class="rating-row" aria-label="Rated 4.9 out of 5">
-          <span class="star-meter" aria-hidden="true">★★★★★<span class="fill">★★★★★</span></span>
-          <span class="rating-value">4.9</span>
-          <span class="review-count">(251 reviews)</span>
-        </div>
         <div class="detail-price">$149.00</div>
+        <div class="rating-row" aria-label="Rated 4.9 out of 5"><span class="stars" aria-hidden="true">★★★★★</span><span class="rating-number" id="detailRating">4.9</span><span class="rating-label">customer rating</span></div>
         <p class="detail-copy" id="detailCopy"></p>
+        <div class="feature-row"><span class="feature-label">Frame size<small>Lens–bridge–temple</small></span><span id="frameSize"></span></div>
         <div class="feature-row"><span>Frame material</span><span id="material"></span></div>
-        <div class="feature-row"><span>Frame size</span><span id="frameSize"></span></div>
-        <div class="size-key">Measurements: lens width – bridge width – temple length, in millimeters.</div>
         <div class="feature-row"><span>Lens</span><span>Clear · prescription ready</span></div>
         <div class="feature-row"><span>Returns</span><span>30 days</span></div>
         <div class="feature-row"><span>Shipping</span><span>Complimentary</span></div>
@@ -190,24 +178,24 @@ const vtoEnabled = params.get("vto") === "1";
 if (vtoEnabled) document.body.classList.add("vto-enabled");
 
 const products = [
-  {id:"black-round",name:"Black Round",meta:"Black acetate · Round",material:"Acetate",size:"50–22–142 mm",
+  {id:"black-round",name:"Black Round",meta:"Black acetate · Round",material:"Acetate",size:"49–20–145 mm",rating:4.9,
    copy:"A polished black acetate frame with a softly rounded silhouette and subtle metal details. Designed as an easy everyday optical frame.",
    frameMeta:"Black acetate · clear lens",scale:1.70,vertical:0.020},
-  {id:"brown-square",name:"Brown Square",meta:"Tortoiseshell acetate · Square",material:"Acetate",size:"52–17–145 mm",
+  {id:"brown-square",name:"Brown Square",meta:"Tortoiseshell acetate · Square",material:"Acetate",size:"52–18–145 mm",rating:4.9,
    copy:"A structured square frame in warm tortoiseshell acetate. The angular lens shape gives the frame a clean, classic profile.",
    frameMeta:"Tortoiseshell acetate · clear lens",scale:1.70,vertical:0.025},
-  {id:"silver-aviator",name:"Silver Aviator",meta:"Silver metal · Aviator",material:"Metal",size:"58–14–140 mm",
+  {id:"silver-aviator",name:"Silver Aviator",meta:"Silver metal · Aviator",material:"Metal",size:"58–14–140 mm",rating:4.9,
    copy:"A lightweight silver metal aviator with clear lenses, a double bridge, and adjustable nose pads for a refined optical look.",
    frameMeta:"Silver metal · clear lens",scale:1.70,vertical:0.035},
-  {id:"rose-cat-eye",name:"Rose Cat Eye",meta:"Rose gold metal · Cat Eye",material:"Metal, acetate",size:"52–17–140 mm",
-   copy:"A softly upswept rose-gold cat-eye frame with translucent blush accents and adjustable nose pads for a delicate, polished look.",
-   frameMeta:"Rose gold · clear lens",scale:1.70,vertical:0.018},
-  {id:"crystal-oval",name:"Crystal Oval",meta:"Crystal acetate · Oval",material:"Acetate",size:"49–19–139 mm",
-   copy:"A lightweight crystal-clear oval frame with champagne-toned hinge details, offering a subtle profile and an airy everyday finish.",
-   frameMeta:"Crystal acetate · clear lens",scale:1.70,vertical:0.025},
-  {id:"burgundy-butterfly",name:"Burgundy Butterfly",meta:"Burgundy acetate · Butterfly",material:"Acetate",size:"53–15–140 mm",
-   copy:"A bold burgundy butterfly frame with gently lifted corners and gold-toned hardware, designed to make a refined statement.",
-   frameMeta:"Burgundy acetate · clear lens",scale:1.70,vertical:0.030}
+  {id:"rose-cat-eye",name:"Rose Cat-Eye",meta:"Blush acetate · Cat-eye",material:"Acetate",size:"52–17–140 mm",rating:4.9,
+   copy:"A translucent blush acetate frame with softly lifted corners and a balanced cat-eye silhouette. The polished finish creates a refined, lightweight everyday look.",
+   frameMeta:"Blush acetate · clear lens",scale:1.70,vertical:0.026},
+  {id:"crystal-oval",name:"Crystal Oval",meta:"Crystal acetate · Oval",material:"Acetate",size:"51–19–145 mm",rating:4.9,
+   copy:"A clear crystal acetate frame with a smooth oval profile and understated hardware. Its transparent construction offers a light, versatile appearance.",
+   frameMeta:"Crystal acetate · clear lens",scale:1.70,vertical:0.024},
+  {id:"champagne-square",name:"Champagne Square",meta:"Champagne metal · Soft square",material:"Metal",size:"53–18–140 mm",rating:4.9,
+   copy:"A slim champagne-gold metal frame with softly squared lenses, adjustable nose pads, and translucent temple tips for a polished, modern finish.",
+   frameMeta:"Champagne metal · clear lens",scale:1.70,vertical:0.030}
 ];
 
 const usage = {
@@ -234,6 +222,7 @@ products.forEach(p=>{
       <div>
         <div class="name">${p.name}</div>
         <div class="meta">${p.meta}</div>
+        <div class="card-size">Size ${p.size}</div>
         <div class="hint">View details + 4 images</div>
         <div class="vto-available">Virtual Try-On available</div>
       </div>
@@ -248,8 +237,9 @@ function openProduct(p){
   usage.openedProducts.push({id:p.id,t:Date.now()});
   document.getElementById("detailName").textContent=p.name;
   document.getElementById("detailCopy").textContent=p.copy;
-  document.getElementById("material").textContent=p.material;
+  document.getElementById("detailRating").textContent=p.rating.toFixed(1);
   document.getElementById("frameSize").textContent=p.size;
+  document.getElementById("material").textContent=p.material;
   gallery.innerHTML=["front","side","angled","model"].map(view=>
     `<figure><img src="assets/${p.id}-${view}.jpg" alt="${p.name} ${view} view"></figure>`
   ).join("");
@@ -295,7 +285,7 @@ products.forEach(p=>{
   b.type="button";
   b.innerHTML=`
     <img src="frames/${p.id}.png" alt="">
-    <div><div class="fc-name">${p.name}</div><div class="fc-meta">${p.frameMeta}</div></div>
+    <div><div class="fc-name">${p.name}</div><div class="fc-meta">${p.frameMeta}<br>Size ${p.size}</div></div>
     <div class="fc-price">$149.00</div>`;
   b.addEventListener("click",()=>selectFrame(p.id));
   frameChoices.appendChild(b);
