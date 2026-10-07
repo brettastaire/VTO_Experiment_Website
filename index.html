@@ -42,9 +42,16 @@ body.vto-enabled .vto-available{display:block}
 .gallery{padding:24px;background:#fafafa;display:grid;grid-template-columns:1fr 1fr;gap:12px;align-content:start}
 .gallery figure{margin:0;background:#f3f3f3;overflow:hidden}.gallery img{display:block;width:100%;aspect-ratio:1.1/1;object-fit:cover}
 .details{padding:78px 42px 42px;border-left:1px solid var(--line)}.details .small{color:var(--muted);text-transform:uppercase;letter-spacing:.13em;font-size:11px;margin-bottom:11px}
-.details h2{font-family:Georgia,serif;font-size:35px;font-weight:500;margin:0 0 12px}.detail-price{font-size:20px;font-weight:600;margin-bottom:23px}
+.details h2{font-family:Georgia,serif;font-size:35px;font-weight:500;margin:0 0 10px}.detail-price{font-size:20px;font-weight:600;margin-bottom:23px}
 .detail-copy{font-size:14px;line-height:1.7;color:#4f4f4f;padding-bottom:22px;border-bottom:1px solid var(--line)}
-.feature-row{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);font-size:13px}.feature-row span:last-child{color:var(--muted)}
+.feature-row{display:flex;justify-content:space-between;gap:18px;padding:14px 0;border-bottom:1px solid var(--line);font-size:13px}.feature-row span:last-child{color:var(--muted);text-align:right}
+.rating-row{display:flex;align-items:center;gap:9px;margin:0 0 14px;font-size:13px}
+.star-meter{position:relative;display:inline-block;line-height:1;letter-spacing:.08em;font-size:17px;color:#d8d1c5}
+.star-meter .fill{position:absolute;inset:0 auto 0 0;width:98%;overflow:hidden;white-space:nowrap;color:#b37b1d}
+.rating-value{font-weight:750;color:var(--ink)}
+.review-count{color:var(--muted)}
+.size-key{margin-top:7px;color:#929292;font-size:10.5px;line-height:1.45}
+#frameChoices{max-height:520px;overflow:auto;padding-right:4px}
 .action{width:100%;border:0;padding:15px 18px;cursor:pointer;font-weight:650;letter-spacing:.01em}
 .select-btn{margin-top:25px;background:var(--accent);color:#fff}
 .try-btn{display:none;margin-top:10px;background:#fff;color:var(--accent);border:1.5px solid var(--accent)}
@@ -95,11 +102,11 @@ footer{border-top:1px solid var(--line);padding:34px;text-align:center;color:var
 <section class="hero">
   <div class="eyebrow">Prescription Eyewear</div>
   <h1>Find your next frame.</h1>
-  <p>Explore three signature styles. Each frame includes premium materials, prescription-ready clear lenses, and a 30-day return window.</p>
+  <p>Explore six signature styles. Each frame includes premium materials, prescription-ready clear lenses, and a 30-day return window.</p>
 </section>
 
 <div class="toolbar">
-  <h2>All Eyeglasses <span style="color:#9b9b9b;font-weight:400">(3)</span></h2>
+  <h2>All Eyeglasses <span style="color:#9b9b9b;font-weight:400">(6)</span></h2>
   <button class="filter" type="button">Filter & Sort</button>
 </div>
 
@@ -114,9 +121,16 @@ footer{border-top:1px solid var(--line);padding:34px;text-align:center;color:var
       <aside class="details">
         <div class="small">Luma Eyewear</div>
         <h2 id="detailName"></h2>
+        <div class="rating-row" aria-label="Rated 4.9 out of 5">
+          <span class="star-meter" aria-hidden="true">★★★★★<span class="fill">★★★★★</span></span>
+          <span class="rating-value">4.9</span>
+          <span class="review-count">(251 reviews)</span>
+        </div>
         <div class="detail-price">$149.00</div>
         <p class="detail-copy" id="detailCopy"></p>
         <div class="feature-row"><span>Frame material</span><span id="material"></span></div>
+        <div class="feature-row"><span>Frame size</span><span id="frameSize"></span></div>
+        <div class="size-key">Measurements: lens width – bridge width – temple length, in millimeters.</div>
         <div class="feature-row"><span>Lens</span><span>Clear · prescription ready</span></div>
         <div class="feature-row"><span>Returns</span><span>30 days</span></div>
         <div class="feature-row"><span>Shipping</span><span>Complimentary</span></div>
@@ -160,7 +174,7 @@ footer{border-top:1px solid var(--line);padding:34px;text-align:center;color:var
       </div>
       <aside class="vto-side">
         <h3>Select a frame</h3>
-        <p>Please try all three frames before continuing with the study.</p>
+        <p>Please try all six frames before continuing with the study.</p>
         <div id="frameChoices"></div>
         <div class="privacy">Camera frames are used only for the live virtual overlay. No photo or video is saved by the webpage.</div>
       </aside>
@@ -176,15 +190,24 @@ const vtoEnabled = params.get("vto") === "1";
 if (vtoEnabled) document.body.classList.add("vto-enabled");
 
 const products = [
-  {id:"black-round",name:"Black Round",meta:"Black acetate · Round",material:"Acetate",
+  {id:"black-round",name:"Black Round",meta:"Black acetate · Round",material:"Acetate",size:"50–22–142 mm",
    copy:"A polished black acetate frame with a softly rounded silhouette and subtle metal details. Designed as an easy everyday optical frame.",
    frameMeta:"Black acetate · clear lens",scale:1.70,vertical:0.020},
-  {id:"brown-square",name:"Brown Square",meta:"Tortoiseshell acetate · Square",material:"Acetate",
+  {id:"brown-square",name:"Brown Square",meta:"Tortoiseshell acetate · Square",material:"Acetate",size:"52–17–145 mm",
    copy:"A structured square frame in warm tortoiseshell acetate. The angular lens shape gives the frame a clean, classic profile.",
    frameMeta:"Tortoiseshell acetate · clear lens",scale:1.70,vertical:0.025},
-  {id:"silver-aviator",name:"Silver Aviator",meta:"Silver metal · Aviator",material:"Metal",
+  {id:"silver-aviator",name:"Silver Aviator",meta:"Silver metal · Aviator",material:"Metal",size:"58–14–140 mm",
    copy:"A lightweight silver metal aviator with clear lenses, a double bridge, and adjustable nose pads for a refined optical look.",
-   frameMeta:"Silver metal · clear lens",scale:1.70,vertical:0.035}
+   frameMeta:"Silver metal · clear lens",scale:1.70,vertical:0.035},
+  {id:"rose-cat-eye",name:"Rose Cat Eye",meta:"Rose gold metal · Cat Eye",material:"Metal, acetate",size:"52–17–140 mm",
+   copy:"A softly upswept rose-gold cat-eye frame with translucent blush accents and adjustable nose pads for a delicate, polished look.",
+   frameMeta:"Rose gold · clear lens",scale:1.70,vertical:0.018},
+  {id:"crystal-oval",name:"Crystal Oval",meta:"Crystal acetate · Oval",material:"Acetate",size:"49–19–139 mm",
+   copy:"A lightweight crystal-clear oval frame with champagne-toned hinge details, offering a subtle profile and an airy everyday finish.",
+   frameMeta:"Crystal acetate · clear lens",scale:1.70,vertical:0.025},
+  {id:"burgundy-butterfly",name:"Burgundy Butterfly",meta:"Burgundy acetate · Butterfly",material:"Acetate",size:"53–15–140 mm",
+   copy:"A bold burgundy butterfly frame with gently lifted corners and gold-toned hardware, designed to make a refined statement.",
+   frameMeta:"Burgundy acetate · clear lens",scale:1.70,vertical:0.030}
 ];
 
 const usage = {
@@ -226,6 +249,7 @@ function openProduct(p){
   document.getElementById("detailName").textContent=p.name;
   document.getElementById("detailCopy").textContent=p.copy;
   document.getElementById("material").textContent=p.material;
+  document.getElementById("frameSize").textContent=p.size;
   gallery.innerHTML=["front","side","angled","model"].map(view=>
     `<figure><img src="assets/${p.id}-${view}.jpg" alt="${p.name} ${view} view"></figure>`
   ).join("");
