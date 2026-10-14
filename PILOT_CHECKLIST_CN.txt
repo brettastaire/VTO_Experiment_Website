@@ -1,0 +1,49 @@
+VTO 六款眼镜实验——Pilot 检查清单
+
+GITHUB / WEBSITE
+[ ] ?vto=0 有 6 款产品但无 VTO
+[ ] ?vto=1 与 control 相同，只增加 VTO
+[ ] 6 款产品均显示 $149.00
+[ ] 6 款产品均显示 4.9
+[ ] 6 款产品均显示尺寸
+[ ] 每款均有 front / side / angled / model 图片
+[ ] 6 款均能在 VTO 中切换
+[ ] 女士款 VTO overlay 正常
+[ ] Chrome camera 正常
+[ ] Safari camera 正常
+
+QUALTRICS FLOW
+[ ] 顶部 Embedded Data 已建立
+[ ] No-consent branch 正常
+[ ] Randomizer 1 = present 1
+[ ] Evenly Present Elements 已勾选
+[ ] 4 groups 全部 nested under Randomizer
+[ ] Randomizer 外没有重复的 Blocks 3A/3B/4A/4B
+[ ] Picture links use ?vto=0
+[ ] VTO links use ?vto=1
+[ ] Links open in new tab
+[ ] Common blocks are outside Randomizer 1
+[ ] IR/Convenience Randomizer presents both in random order
+[ ] Dual-only channel choice display logic works
+[ ] Debrief states ratings/products are experimental stimuli
+
+PROLIFIC
+[ ] Study URL points to Qualtrics
+[ ] URL parameters enabled
+[ ] PROLIFIC_PID recorded
+[ ] Desktop/laptop selected
+[ ] Camera requirement disclosed
+[ ] US / 18+ audience set
+[ ] Completion URL pasted into Qualtrics
+[ ] Full participant journey tested through Prolific Preview
+
+DATA
+[ ] VTO, CHANNEL, CONDITION exported
+[ ] website_success exported
+[ ] viewed_all_six exported
+[ ] vto_success exported
+[ ] number_vto_tried exported
+[ ] preferred_frame exported
+[ ] Four cells are approximately balanced
+[ ] Median completion time reviewed
+[ ] Technical-failure rate reviewed

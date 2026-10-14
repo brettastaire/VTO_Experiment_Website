@@ -26,15 +26,16 @@ button{font:inherit}
 .toolbar{max-width:1240px;margin:28px auto 18px;padding:0 28px;display:flex;justify-content:space-between;align-items:center}
 .toolbar h2{font-size:18px;margin:0}.filter{border:1px solid var(--line);background:#fff;padding:10px 15px;border-radius:999px;font-size:13px}
 .grid{max-width:1240px;margin:0 auto 80px;padding:0 28px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.section-label{grid-column:1 / -1;text-align:center;font-size:24px;font-weight:700;letter-spacing:.04em;margin:8px 0 -2px;font-family:Georgia,serif}
-.section-spacer{grid-column:1 / -1;height:6px}
+.section-label{grid-column:1 / -1;text-align:center;font-family:Georgia,serif;font-size:25px;font-weight:600;letter-spacing:.035em;margin:8px 0 -2px}
+.card-vto-btn{display:none;width:100%;margin-top:13px;border:1.5px solid var(--accent);border-radius:2px;background:#fff;color:var(--accent);padding:11px 14px;font-weight:700;letter-spacing:.015em;cursor:pointer;transition:background .18s ease,color .18s ease,transform .18s ease}
+body.vto-enabled .card-vto-btn{display:block}
+.card-vto-btn:hover{background:var(--accent);color:#fff;transform:translateY(-1px)}
+.card-vto-btn:focus-visible{outline:3px solid rgba(32,54,64,.24);outline-offset:2px}
 .card{cursor:pointer;transition:.2s ease}.card:hover{transform:translateY(-2px)}
 .image-wrap{aspect-ratio:1.08/1;background:#f7f7f7;overflow:hidden}
 .image-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease}.card:hover img{transform:scale(1.025)}
 .card-info{padding:15px 2px 0;display:flex;justify-content:space-between;gap:16px}.name{font-size:16px;font-weight:600;margin-bottom:5px}
 .meta{color:var(--muted);font-size:13px}.price{font-size:15px;font-weight:600;white-space:nowrap}.hint{margin-top:10px;color:#7a7a7a;font-size:12px}
-.vto-available{display:none;margin-top:10px;font-size:12px;font-weight:700;color:var(--success);letter-spacing:.02em}
-body.vto-enabled .vto-available{display:block}
 
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.46);z-index:30;overflow:auto;padding:26px}
 .overlay.open{display:block}
@@ -87,7 +88,7 @@ footer{border-top:1px solid var(--line);padding:34px;text-align:center;color:var
 
 @media(max-width:850px){
   .nav{padding:0 18px;grid-template-columns:1fr auto}.nav-left{display:none}.nav-right{gap:12px}
-  .hero h1{font-size:36px}.grid{grid-template-columns:1fr}.section-label{font-size:21px;margin:0 0 -6px}.detail-grid{grid-template-columns:1fr}
+  .hero h1{font-size:36px}.grid{grid-template-columns:1fr}.section-label{font-size:22px;margin:0 0 -6px}.detail-grid{grid-template-columns:1fr}
   .details{border-left:0;padding:35px 24px}.gallery{padding:12px}
   .vto-layout{grid-template-columns:1fr}.viewer{border-right:0;border-bottom:1px solid var(--line)}
 }
@@ -228,11 +229,12 @@ const gallery=document.getElementById("gallery");
 let currentProduct=products[0];
 
 function addSectionLabel(label){
-  const el=document.createElement("div");
-  el.className="section-label";
-  el.textContent=label;
-  grid.appendChild(el);
+  const heading=document.createElement("div");
+  heading.className="section-label";
+  heading.textContent=label;
+  grid.appendChild(heading);
 }
+
 function addProductCard(p){
   const card=document.createElement("article");
   card.className="card";
@@ -243,11 +245,16 @@ function addProductCard(p){
         <div class="name">${p.name}</div>
         <div class="meta">${p.meta}</div>
         <div class="hint">View details + 4 images</div>
-        <div class="vto-available">Virtual Try-On available</div>
       </div>
       <div class="price">$149.00</div>
-    </div>`;
+    </div>
+    <button class="card-vto-btn" type="button" aria-label="Virtually try on ${p.name}">Virtual Try-On</button>`;
+
   card.addEventListener("click",()=>openProduct(p));
+  card.querySelector(".card-vto-btn").addEventListener("click",event=>{
+    event.stopPropagation();
+    openVTOForProduct(p);
+  });
   grid.appendChild(card);
 }
 
@@ -279,15 +286,17 @@ document.getElementById("productClose").addEventListener("click",closeProduct);
 productOverlay.addEventListener("click",e=>{if(e.target===productOverlay)closeProduct();});
 
 const vtoOverlay=document.getElementById("vtoOverlay");
-document.getElementById("detailTryBtn").addEventListener("click",()=>{
+function openVTOForProduct(product){
   if(!vtoEnabled) return;
+  currentProduct=product;
   usage.vtoOpened++;
   closeProduct();
-  selectFrame(currentProduct.id);
+  selectFrame(product.id);
   vtoOverlay.classList.add("open");
   vtoOverlay.setAttribute("aria-hidden","false");
   document.body.style.overflow="hidden";
-});
+}
+document.getElementById("detailTryBtn").addEventListener("click",()=>openVTOForProduct(currentProduct));
 function closeVTO(){
   stopCameraFn();
   vtoOverlay.classList.remove("open");
